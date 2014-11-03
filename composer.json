@@ -1,0 +1,29 @@
+{
+    "name": "mbfisher/react-amqp",
+    "description": "React bindings for PhpAmqpLib",
+    "require": {
+        "react/react": "~0.4",
+        "evenement/evenement": "~2.0",
+        "videlalvaro/php-amqplib": "dev-feature/interfaces@dev"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.0",
+        "task/task": "~0.6",
+        "task/phpspec": "~0.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mike Fisher",
+            "email": "mike@mbfisher.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "mbfisher\\ReactAmqp\\": "src/"
+        }
+    },
+    "repositories": [
+        {"type": "vcs", "url": "https://github.com/mbfisher/php-amqplib"}
+    ]
+}
