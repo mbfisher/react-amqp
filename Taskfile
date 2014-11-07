@@ -1,0 +1,19 @@
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+$project = new Task\Project('mbfisher\react-amqp');
+
+$project->inject(function ($container) {
+    $container['phpspec'] = function () {
+        return new \Task\Plugin\PhpSpecPlugin();
+    };
+});
+
+$project->addTask('test', ['phpspec', function ($phpspec) {
+    $phpspec->command('run')
+        ->setVerbose(true)
+        ->pipe($this->getOutput());
+}]);
+
+return $project;
