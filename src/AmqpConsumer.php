@@ -17,9 +17,7 @@ class AmqpConsumer extends EventEmitter
         $this->channel = $channel;
         $this->loop = $loop;
 
-        $this->getLoop()->addReadStream($channel->getConnection()->getSocket(), function () use ($channel) {
-            $channel->wait(null, true);
-        });
+        $this->getLoop()->addReadStream($channel->getConnection()->getSocket(), [$this, 'wait']);
     }
 
     public function getChannel()
@@ -32,16 +30,24 @@ class AmqpConsumer extends EventEmitter
         return $this->loop;
     }
 
+    public function wait()
+    {
+        $this->getChannel()->wait(null, true);
+    }
+
     public function consume($queue)
     {
-        /*
-         * queue: Queue from where to get the messages
-         * consumer_tag: Consumer identifier
-         * no_local: Don't receive messages published by this consumer.
-         * no_ack: Tells the server if the consumer will acknowledge the messages.
-         * exclusive: Request exclusive consumer access, meaning only this consumer can access the queue
-         * nowait:
-         * callback: A PHP Callback
+        /**
+         * @param string $queue
+         * @param string $consumer_tag
+         * @param bool $no_local
+         * @param bool $no_ack
+         * @param bool $exclusive
+         * @param bool $nowait
+         * @param null $callback
+         * @param null $ticket
+         * @param array $arguments
+         * @return mixed
          */
         $this->getChannel()->basic_consume(
             $queue,
@@ -56,6 +62,6 @@ class AmqpConsumer extends EventEmitter
     
     public function handleMessage(AmqpMessage $message)
     {
-        $this->emit('message', $message);
+        $this->emit('message', [$message]);
     }
 }
