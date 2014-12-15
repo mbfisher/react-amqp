@@ -2,7 +2,7 @@
     "name": "mbfisher/react-amqp",
     "description": "React bindings for PhpAmqpLib",
     "require": {
-        "php": "~5.4.0",
+        "php": ">=5.4.0",
         "react/react": "~0.4",
         "evenement/evenement": "~2.0",
         "videlalvaro/php-amqplib": "dev-feature/interfaces@dev"
